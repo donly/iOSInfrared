@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.signalManager = (UIApplication.sharedApplication().delegate as AppDelegate).sm
+        self.signalManager = (UIApplication.shared.delegate as! AppDelegate).sm
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,10 +24,13 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func sendSignal(sender: AnyObject) {
-        if(self.signalManager != nil) {
-            self.signalManager!.sendSignal(SignalFormat.sharedInstance.getNecSignalList(3))
+    @IBAction func sendSignal(_ sender: AnyObject) {
+        guard let signalManager = signalManager else {
+            return
         }
+        
+        let sinals = SignalFormat.sharedInstance.getNecSignalList(3)
+        signalManager.sendSignal(sinals as? [AnyObject])
     }
 
 }
